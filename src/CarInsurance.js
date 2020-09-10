@@ -1,4 +1,5 @@
-const Name = require('./ProductName')
+const Name = require('./ProductName');
+const ProductHandler = require('./ProductHandler')
 
 /**
  * @typedef {object} Product
@@ -8,105 +9,90 @@ const Name = require('./ProductName')
  */
 
 /** Represent a car insurance. */
-module.exports = class CarInsurance {
+module.exports = class CarInsurance extends ProductHandler {
   /**
    * Car insurance constructor.
-   *
    * @param {Product[]} products 
    */
   constructor(products = []) {
-    this.products = products;
-  }
-
-  /**
-   * Decrement sellIn for one product.
-   *
-   * @param {number} index - Array index.
-   */
-  decrementProductSellIn(index) {
-    this.products[index].sellIn -= 1
-  }
-
-  /**
-   * Increment price for one product.
-   *
-   * @param {number} index - Array index.
-   * @param {number} add - Value to add to price.
-   */
-  incrementProductPrice(index, add) {
-    const price = this.products[index].price
-    if (price <= 50 && price + add > 50) this.products[index].price = 50
-    else if (price >= 0 && price <= 50) this.products[index].price += add
-  }
-
-  /**
-   * Decrement price for one product.
-   *
-   * @param {number} index - Array index.
-   * @param {number} subtract - Value to subtract to price.
-   */
-  decrementProductPrice(index, subtract) {
-    if (this.products[index].price !== 0) this.products[index].price -= subtract
-    else if (this.products[index].price < subtract) this.products[index].price = 0
-  }
-
-  /**
-   * Reset price for one product.
-   *
-   * @param {number} index - Array index.
-   */
-  resetProductPrice(index) {
-    this.products[index].price = 0
+    super(products)
   }
 
   /**
    * Update products price.
-   *
    * @returns {Product[]} Current products.
    */
   updatePrice() {
     for (var i = 0; i < this.products.length; i++) {
-      switch (this.products[i].name) {
-        case Name.lowCoverage:
-          if (this.products[i].sellIn <= 0) this.resetProductPrice(i)
-          else this.decrementProductPrice(i, 1)
-          this.decrementProductSellIn(i)
-          break
-        
-        case Name.mediumCoverage:
-          if (this.products[i].sellIn <= 0) this.decrementProductPrice(i, 2)
-          else this.decrementProductPrice(i, 1)
-          this.decrementProductSellIn(i)
-          break
-
-        case Name.fullCoverage:
-          if (this.products[i].sellIn <= 0) this.incrementProductPrice(i, 2)
-          else this.incrementProductPrice(i, 1)
-          this.decrementProductSellIn(i)
-          break
-
-        case Name.megaCoverage:
-          if (this.products[i].sellIn < 0) this.incrementProductPrice(i, 2)
-          else this.incrementProductPrice(i, 1)
-          break
-
-        case Name.superSale:
-          this.decrementProductPrice(i, 1)
-          this.decrementProductSellIn(i)
-          break
-
-        case Name.specialFullCoverage:
-          console.log(this.products[i].sellIn)
-          if (this.products[i].sellIn < 1) this.resetProductPrice(i)
-          else if (this.products[i].sellIn <= 5) this.incrementProductPrice(i, 3)
-          else if (this.products[i].sellIn <= 10) this.incrementProductPrice(i, 2)
-          else this.incrementProductPrice(i, 1)
-          // else this.incrementProductPrice(i, 1)
-          this.decrementProductSellIn(i, 1)
-          break
-      }
+      const { name } = this.products[i]
+      if (name === Name.lowCoverage) this.lowCoverage(i)
+      else if (name === Name.mediumCoverage) this.mediumCoverage(i)
+      else if (name === Name.fullCoverage) this.fullCoverage(i)
+      else if (name === Name.megaCoverage) this.megaCoverage(i)
+      else if (name === Name.superSale) this.superSale(i)
+      else if (name === Name.specialFullCoverage) this.specialFullCoverage(i)
     }
 
     return this.products;
+  }
+
+  /**
+   * Low coverage.
+   * @param {number} index - Array index.
+   */
+  lowCoverage(index) {
+    if (this.products[index].sellIn <= 0) this.resetProductPrice(index)
+    else this.decrementProductPrice(index, 1)
+    this.decrementProductSellIn(index)
+  }
+
+  /**
+   * Medium coverage.
+   * @param {number} index - Array index.
+   */
+  mediumCoverage(index) {
+    if (this.products[index].sellIn <= 0) this.decrementProductPrice(index, 2)
+    else this.decrementProductPrice(index, 1)
+    this.decrementProductSellIn(index)
+  }
+
+  /**
+   * Full coverage.
+   * @param {number} index - Array index.
+   */
+  fullCoverage(index) {
+    if (this.products[index].sellIn <= 0) this.incrementProductPrice(index, 2)
+    else this.incrementProductPrice(index, 1)
+    this.decrementProductSellIn(index)
+  }
+
+  /**
+   * Mega coverage.
+   * @param {number} index - Array index.
+   */
+  megaCoverage(index) {
+    if (this.products[index].sellIn < 0) this.incrementProductPrice(index, 2)
+    else this.incrementProductPrice(index, 1)
+  }
+
+  /**
+   * Super sale.
+   * @param {number} index - Array index.
+   */
+  superSale(index) {
+    this.decrementProductPrice(index, 1)
+    this.decrementProductSellIn(index)
+  }
+
+  /**
+   * Special full coverage.
+   * @param {number} index - Array index.
+   */
+  specialFullCoverage(index) {
+    if (this.products[index].sellIn < 1) this.resetProductPrice(index)
+    else if (this.products[index].sellIn <= 5) this.incrementProductPrice(index, 3)
+    else if (this.products[index].sellIn <= 10) this.incrementProductPrice(index, 2)
+    else this.incrementProductPrice(index, 1)
+    this.decrementProductSellIn(index, 1)
   }
 }

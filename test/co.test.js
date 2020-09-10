@@ -208,10 +208,8 @@ test('Case 7 Special Full Coverage', () => {
       price: 50
     }])
 
-    console.log('this.products[i].sellIn')
     for (let i = 7; i <= 10; i++) {
       const products = car.updatePrice()
-      console.log(products,  sellIn - i)
       expect(products).toEqual([{
         name: Name.specialFullCoverage,
         sellIn: sellIn - i,
@@ -228,59 +226,4 @@ test('Case 7 Special Full Coverage', () => {
       }])
     }
   }
-
-  // for (let i = 6; i <= 10; i++) {
-  //   const products = car.updatePrice()
-  //   expect(products).toEqual([{
-  //     name: Name.specialFullCoverage,
-  //     sellIn: sellIn - i,
-  //     price: 25 + ((i - 5) * 2)
-  //   }])
-  // }
-
-  // for (let i = 11; i <= 15; i++) {
-  //   const products = car.updatePrice()
-  //   expect(products).toEqual([{
-  //     name: Name.specialFullCoverage,
-  //     sellIn: sellIn - i,
-  //     price: 35 + ((i - 10) * 3)
-  //   }])
-  // }
-
-  // for (let i = 16; i <= 30; i++) {
-  //   const products = car.updatePrice()
-  //   expect(products).toEqual([{
-  //     name: Name.specialFullCoverage,
-  //     sellIn: sellIn - i,
-  //     price: 0
-  //   }])
-  // }
 })
-
-
-// test('Integration', () => {
-//   const productsAtDayZero = [
-//     new Product('Medium Coverage', 10, 20),
-//     new Product('Full Coverage', 2, 0),
-//     new Product('Low Coverage', 5, 7),
-//     new Product('Mega Coverage', 0, 80),
-//     new Product('Mega Coverage', -1, 80),
-//     new Product('Special Full Coverage', 15, 20),
-//     new Product('Special Full Coverage', 10, 49),
-//     new Product('Special Full Coverage', 5, 49),
-//     new Product('Super Sale', 3, 6),
-//   ];
-  
-//   const carInsurance = new CarInsurance(productsAtDayZero);
-
-  
-//   for (let i = 1; i <= 30; i += 1) {
-//     console.log(`Day ${i}`);
-//     console.log('name, sellIn, price');
-//     console.log(carInsurance
-//       .updatePrice()
-//       .map((product) => `${product.name}, ${product.sellIn}, ${product.price}`)
-//       .join('\n'))
-//     console.log('');
-//   }
-// })
