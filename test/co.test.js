@@ -1,43 +1,22 @@
 const { Product, CarInsurance } = require('../src/co');
 const Name = require('../src/ProductName')
 
-test('should foo', () => {
-  const car = new CarInsurance([ new Product('foo', 0, 0) ])
+// Behavior test
+
+test('Empty case with empty arr', () => {
+  const car = new CarInsurance([])
+
   const products = car.updatePrice()
-  expect(products[0].name).toBe('foo')
+  expect(products).toEqual([])
 })
 
-// test('The price of a product is never negative.', () => {
-//   expect(() => new Product('foo', 0, -1)).toThrow('The price of a product is never negative.')
-// })
+test('Empty case without argument', () => {
+  const car = new CarInsurance()
 
-// test('The price of a product is never more than 50.', () => {
-//   expect(() => new Product('foo', 0, 51)).toThrow('The price of a product is never more than 50.')
-// })
-
-test('Enum low coverage', () => {
-  expect(Name.lowCoverage).toBe('Low Coverage')
+  const products = car.updatePrice()
+  expect(products).toEqual([])
 })
 
-test('Enum medium coverage', () => {
-  expect(Name.mediumCoverage).toBe('Medium Coverage')
-})
-
-test('Enum full coverage', () => {
-  expect(Name.fullCoverage).toBe('Full Coverage')
-})
-
-test('Enum mega coverage', () => {
-  expect(Name.megaCoverage).toBe('Mega Coverage')
-})
-
-test('Enum super sale', () => {
-  expect(Name.superSale).toBe('Super Sale')
-})
-
-test('Enum special full coverage', () => {
-  expect(Name.specialFullCoverage).toBe('Special Full Coverage')
-})
 test('Case 1 Medium Coverage', () => {
   const sellIn = 10
   const price = 20
@@ -228,29 +207,57 @@ test('Case 7 Special Full Coverage', () => {
   }
 })
 
+test('Case 8 Special Full Coverage', () => {
+  const sellIn = 5
+  const price = 49
+  const car = new CarInsurance([ new Product(Name.specialFullCoverage, sellIn, price) ])
 
+  for (let i = 1; i <= 5; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.specialFullCoverage,
+      sellIn: sellIn - i,
+      price: 50
+    }])
+  }
 
+  for (let i = 6; i <= 30; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.specialFullCoverage,
+      sellIn: sellIn - i,
+      price: 0
+    }])
+  }
+})
 
+test('Case 9 Super Sale', () => {
+  const sellIn = 3
+  const price = 6
+  const car = new CarInsurance([ new Product(Name.superSale, sellIn, price) ])
 
+  for (let i = 1; i <= 3; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.superSale,
+      sellIn: sellIn - i,
+      price: price - i
+    }])
+  }
 
-// test('Case 9 Super Sale', () => {
-//   const sellIn = 3
-//   const price = 6
-//   const car = new CarInsurance([ new Product(Name.superSale, sellIn, price) ])
+  const products = car.updatePrice()
+  expect(products).toEqual([{
+    name: Name.superSale,
+    sellIn: -1,
+    price: 1
+  }])
 
-//   for (let i = 1; i <= 3; i++) {
-//     const products = car.updatePrice()
-//     expect(products).toEqual([{
-//       name: Name.superSale,
-//       sellIn: sellIn - i,
-//       price: price - i
-//     }])
-//   }
-
-//   const products = car.updatePrice()
-//   expect(products).toEqual([{
-//     name: Name.superSale,
-//     sellIn: -1,
-//     price: 1
-//   }])
-// })
+  for (let i = 5; i <= 30; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.superSale,
+      sellIn: sellIn - i,
+      price: 0
+    }])
+  }
+})

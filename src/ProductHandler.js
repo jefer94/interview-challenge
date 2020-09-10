@@ -8,13 +8,13 @@ const Name = require('./ProductName')
  */
 
 /** Represent a car insurance. */
-module.exports = class ProductHandler {
+class ProductHandler {
   /**
    * ProductHandler constructor.
    * @param {Product[]} products 
    */
   constructor(products = []) {
-    this.products = products;
+    this.products = products
   }
 
   /**
@@ -33,7 +33,7 @@ module.exports = class ProductHandler {
   incrementProductPrice(index, add) {
     const price = this.products[index].price
     if (price <= 50 && price + add > 50) this.products[index].price = 50
-    else if (price >= 0 && price <= 50) this.products[index].price += add
+    else this.products[index].price += add
   }
 
   /**
@@ -42,8 +42,9 @@ module.exports = class ProductHandler {
    * @param {number} subtract - Value to subtract to price.
    */
   decrementProductPrice(index, subtract) {
-    if (this.products[index].price !== 0) this.products[index].price -= subtract
-    else if (this.products[index].price < subtract) this.products[index].price = 0
+    const price = this.products[index].price
+    if (price - subtract > 0) this.products[index].price -= subtract
+    else this.products[index].price = 0
   }
 
   /**
@@ -54,3 +55,5 @@ module.exports = class ProductHandler {
     this.products[index].price = 0
   }
 }
+
+module.exports = ProductHandler

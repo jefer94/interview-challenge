@@ -9,12 +9,12 @@ const ProductHandler = require('./ProductHandler')
  */
 
 /** Represent a car insurance. */
-module.exports = class CarInsurance extends ProductHandler {
+class CarInsurance extends ProductHandler {
   /**
    * Car insurance constructor.
    * @param {Product[]} products 
    */
-  constructor(products = []) {
+  constructor(products) {
     super(products)
   }
 
@@ -77,7 +77,9 @@ module.exports = class CarInsurance extends ProductHandler {
    * @param {number} index - Array index.
    */
   superSale(index) {
-    this.decrementProductPrice(index, 1)
+    const { sellIn } = this.products[index]
+    if (sellIn <= 0) this.decrementProductPrice(index, 2)
+    else this.decrementProductPrice(index, 1)
     this.decrementProductSellIn(index)
   }
 
@@ -86,10 +88,13 @@ module.exports = class CarInsurance extends ProductHandler {
    * @param {number} index - Array index.
    */
   specialFullCoverage(index) {
-    if (this.products[index].sellIn < 1) this.resetProductPrice(index)
-    else if (this.products[index].sellIn <= 5) this.incrementProductPrice(index, 3)
-    else if (this.products[index].sellIn <= 10) this.incrementProductPrice(index, 2)
+    const { sellIn } = this.products[index]
+    if (sellIn < 1) this.resetProductPrice(index)
+    else if (sellIn <= 5) this.incrementProductPrice(index, 3)
+    else if (sellIn <= 10) this.incrementProductPrice(index, 2)
     else this.incrementProductPrice(index, 1)
     this.decrementProductSellIn(index, 1)
   }
 }
+
+module.exports = CarInsurance
