@@ -207,23 +207,50 @@ test('Case 7 Special Full Coverage', () => {
       sellIn: sellIn - i,
       price: 50
     }])
+  }
 
-    for (let i = 7; i <= 10; i++) {
-      const products = car.updatePrice()
-      expect(products).toEqual([{
-        name: Name.specialFullCoverage,
-        sellIn: sellIn - i,
-        price: 50
-      }])
-    }
+  for (let i = 7; i <= 10; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.specialFullCoverage,
+      sellIn: sellIn - i,
+      price: 50
+    }])
+  }
 
-    for (let i = 11; i <= 30; i++) {
-      const products = car.updatePrice()
-      expect(products).toEqual([{
-        name: Name.specialFullCoverage,
-        sellIn: sellIn - i,
-        price: 0
-      }])
-    }
+  for (let i = 11; i <= 30; i++) {
+    const products = car.updatePrice()
+    expect(products).toEqual([{
+      name: Name.specialFullCoverage,
+      sellIn: sellIn - i,
+      price: 0
+    }])
   }
 })
+
+
+
+
+
+
+// test('Case 9 Super Sale', () => {
+//   const sellIn = 3
+//   const price = 6
+//   const car = new CarInsurance([ new Product(Name.superSale, sellIn, price) ])
+
+//   for (let i = 1; i <= 3; i++) {
+//     const products = car.updatePrice()
+//     expect(products).toEqual([{
+//       name: Name.superSale,
+//       sellIn: sellIn - i,
+//       price: price - i
+//     }])
+//   }
+
+//   const products = car.updatePrice()
+//   expect(products).toEqual([{
+//     name: Name.superSale,
+//     sellIn: -1,
+//     price: 1
+//   }])
+// })

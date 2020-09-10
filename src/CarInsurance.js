@@ -28,7 +28,7 @@ module.exports = class CarInsurance extends ProductHandler {
       if (name === Name.lowCoverage) this.lowCoverage(i)
       else if (name === Name.mediumCoverage) this.mediumCoverage(i)
       else if (name === Name.fullCoverage) this.fullCoverage(i)
-      else if (name === Name.megaCoverage) this.megaCoverage(i)
+      // else if (name === Name.megaCoverage) this.megaCoverage(i)
       else if (name === Name.superSale) this.superSale(i)
       else if (name === Name.specialFullCoverage) this.specialFullCoverage(i)
     }
@@ -66,14 +66,11 @@ module.exports = class CarInsurance extends ProductHandler {
     this.decrementProductSellIn(index)
   }
 
-  /**
-   * Mega coverage.
-   * @param {number} index - Array index.
-   */
-  megaCoverage(index) {
-    if (this.products[index].sellIn < 0) this.incrementProductPrice(index, 2)
-    else this.incrementProductPrice(index, 1)
-  }
+  // /**
+  //  * Mega coverage.
+  //  * @param {number} index - Array index.
+  //  */
+  // megaCoverage(index) {}
 
   /**
    * Super sale.
