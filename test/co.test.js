@@ -1,5 +1,5 @@
 const { Product, CarInsurance } = require('../src/co');
-const Name = require('../src/CarInsuranceName')
+const Name = require('../src/ProductName')
 
 test('should foo', () => {
   const car = new CarInsurance([ new Product('foo', 0, 0) ])
@@ -200,13 +200,33 @@ test('Case 7 Special Full Coverage', () => {
   const price = 49
   const car = new CarInsurance([ new Product(Name.specialFullCoverage, sellIn, price) ])
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 6; i++) {
     const products = car.updatePrice()
     expect(products).toEqual([{
       name: Name.specialFullCoverage,
       sellIn: sellIn - i,
       price: 50
     }])
+
+    console.log('this.products[i].sellIn')
+    for (let i = 7; i <= 10; i++) {
+      const products = car.updatePrice()
+      console.log(products,  sellIn - i)
+      expect(products).toEqual([{
+        name: Name.specialFullCoverage,
+        sellIn: sellIn - i,
+        price: 50
+      }])
+    }
+
+    for (let i = 11; i <= 30; i++) {
+      const products = car.updatePrice()
+      expect(products).toEqual([{
+        name: Name.specialFullCoverage,
+        sellIn: sellIn - i,
+        price: 0
+      }])
+    }
   }
 
   // for (let i = 6; i <= 10; i++) {

@@ -1,4 +1,4 @@
-// enum
+/** Enum of product types */
 module.exports = {
   lowCoverage: 'Low Coverage',
   mediumCoverage: 'Medium Coverage',
