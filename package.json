@@ -4,8 +4,8 @@
   "description": "ComparaOnline Software Engineer Test",
   "main": "src/co.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "after-30-days": "node src/after30Days.js",
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",

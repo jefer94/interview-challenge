@@ -5,8 +5,8 @@ WORKDIR /usr/src
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 
-RUN yarn
+RUN yarn install --production
 
 COPY . .
 
-CMD yarn coverage
+CMD yarn after-30-days
